@@ -25,6 +25,7 @@ namespace MVC_manyrelationship
         public int StoreID { get; set; }
         public Order Order { get; set; }
         public Product Product { get; set; }
+        public int ProductCount { get; set; }
     }
 
     class OrderContext : DbContext
