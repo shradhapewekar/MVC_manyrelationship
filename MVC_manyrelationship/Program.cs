@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MVC_manyrelationship
 {
@@ -81,10 +82,37 @@ namespace MVC_manyrelationship
 
                 context.SaveChanges();
 
+
+                // Display all orders where a product is sold
+                var a = context.Orders
+                    .Include(c => c.Total_Products)
+                    .Where(c => c.Total_Products.Count != 0);
+                foreach (var i in a)
+                {
+                    Console.WriteLine("OrderID={0},CustomerName={1}", i.OrderId, i.Name);
+                }
+
+                // For a given product, find the order where it is sold the maximum.
+                Order output = context.Store
+                    .Where(c => c.Product.Name == "Product 1")
+                    .OrderByDescending(c => c.ProductCount)
+                    .Select(c => c.Order)
+                    .First();
+                
+                Console.WriteLine("OrderID={0},Name={2}", output.OrderId, output.Name);
+
+                // Find the orders where a given product is sold.
+                var orders = context.Store
+                    .Where(c => c.Product.Name == "Product 2");
+               
+                foreach (var i in orders)
+                {
+                    Console.Write(i.Order.OrderId + " ");
+                }
+
             }
 
         }
     }
-
 
 }
