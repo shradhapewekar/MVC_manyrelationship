@@ -16,6 +16,7 @@ namespace MVC_manyrelationship
     {
         public int ProductId { get; set; }
         public string Name { get; set; }
+        public int Price { get; set; }
 
         public List<Store> Total_Orders { get; set; }
     }
@@ -49,22 +50,41 @@ namespace MVC_manyrelationship
             {
                 context.Database.EnsureCreated();
 
-                Product product = new Product { Name = "T-shirt" };
-                Order order = new Order { Name = "U12345" };
-                Store store = new Store
-                {
-                    Order = order,
-                    Product = product
-                        
-                };
+                Product MyProduct1 = new Product();
+                MyProduct1.ProductId = 1;
+                MyProduct1.Name = "Product 1";
+                MyProduct1.Price = 10;
 
-                context.Products.Add(product);
-                context.Orders.Add(order);
-                context.Store.Add(store);
+                Product MyProduct2 = new Product();
+                MyProduct2.ProductId = 2;
+                MyProduct2.Name = "Product 2";
+                MyProduct2.Price = 18;
+
+                Order MyOrder1 = new Order();
+                MyOrder1.OrderId = 1;
                 
+
+                Order MyOrder2 = new Order();
+                MyOrder2.OrderId = 2;
+                
+
+                Order MyOrder3 = new Order();
+                MyOrder3.OrderId = 3;
+
+
+                context.Products.Add(MyProduct1);
+                context.Products.Add(MyProduct2);
+
+                context.Orders.Add(MyOrder1);
+                context.Orders.Add(MyOrder2);
+                context.Orders.Add(MyOrder3);
+
                 context.SaveChanges();
 
             }
+
         }
     }
+
+
 }
